@@ -3,6 +3,8 @@ package musicmemorygame;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Random;
+import java.lang.*;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -11,6 +13,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioPlayer {
+    
+    Scanner scan = new Scanner(System.in);
+    Random rand = new Random();
+    Thread T;
     
     //to store current position
     Long currentFrame;
@@ -21,14 +27,16 @@ public class AudioPlayer {
     
     AudioInputStream audioInputStream;
     static String filePath;
+    static File file;
     
     //constructor to initialize streams and clip
-    public AudioPlayer(String filePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException
+    public AudioPlayer(File file) throws UnsupportedAudioFileException, IOException, LineUnavailableException
     {
-        this.filePath = filePath; 
+        //this.filePath = filePath; 
+        this.file = file;
         
         //create AudioInputStream object
-        audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+        audioInputStream = AudioSystem.getAudioInputStream(file);
         
         //create clip reference
         clip = AudioSystem.getClip();
@@ -36,11 +44,14 @@ public class AudioPlayer {
         //open audioInputStream to the clip
         clip.open(audioInputStream);
         
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        //default status is paused at start
+        status = "paused";
+
+        //clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
     //work as the user enters their choice
-    public void gotoChoice(int c) throws UnsupportedAudioFileException, IOException, LineUnavailableException
+    public void gotoChoice(int c) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     {
         switch(c)
         {
@@ -58,10 +69,15 @@ public class AudioPlayer {
                 break;
             case 5:
                 System.out.println("Enter time in seconds (" + 0 + ", " + clip.getMicrosecondLength()/1000000 + ")");
-                Scanner scan = new Scanner(System.in);
                 long c1 = scan.nextLong();
                 jump(c1*1000000);
-                break;                
+                break;
+            case 6:
+                playStartSong();
+                break;
+            case 7:
+                playRandomSong();
+                break;
         }
     }
     
@@ -134,11 +150,54 @@ public class AudioPlayer {
         }
     }
     
-    //method to reser audio stream
+    //method to reset audio stream
     public void resetAudioStream() throws UnsupportedAudioFileException, IOException, LineUnavailableException
     {
-        audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+        audioInputStream = AudioSystem.getAudioInputStream(file);
         clip.open(audioInputStream);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    
+    //method to play from the start of the song
+    public void playStartSong() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
+    {
+        System.out.println("Enter how many seconds you would like to listen to: ");
+        long seconds = scan.nextLong();
+        if(seconds > clip.getMicrosecondLength()/1000000) //check to make sure the max isn't gone over
+            seconds = clip.getMicrosecondLength()/1000000;
+        play();
+        long initTime = System.currentTimeMillis();
+        boolean timeElapsed = false;
+        while(!timeElapsed)
+        {
+            if(System.currentTimeMillis() - initTime >= (seconds * 1000))
+                timeElapsed = true;
+            else
+                T.sleep(1000);
+        }
+        stop();
+    }
+    
+    //method to play from a random point in the song
+    public void playRandomSong() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
+    {
+        System.out.println("Enter how many seconds you would like to listen to: ");
+        long seconds = scan.nextLong();
+        int randomSelection = rand.nextInt((int)(clip.getMicrosecondLength()/1000000)-(int)seconds);
+        long startTime = (long) randomSelection;
+        System.out.println("Starting Time: " + startTime);
+        if(seconds > (clip.getMicrosecondLength() - startTime*1000000) /1000000) //check to make sure the max isn't gone over
+            seconds = clip.getMicrosecondLength() - startTime*1000000;
+        jump(startTime*1000000);
+        long initTime = System.currentTimeMillis();
+        boolean timeElapsed = false;
+        while(!timeElapsed)
+        {
+            if(System.currentTimeMillis() - initTime >= (seconds * 1000))
+                timeElapsed = true;
+            else
+                T.sleep(1000);
+        }
+        stop();
     }
 }
