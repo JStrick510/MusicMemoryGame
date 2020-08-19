@@ -29,8 +29,6 @@ public class DirectorySelector extends JPanel implements ActionListener {
     
     public void actionPerformed(ActionEvent e)
     {
-        int result;
-        
         chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle(chooserTitle);
@@ -38,13 +36,7 @@ public class DirectorySelector extends JPanel implements ActionListener {
         chooser.setAcceptAllFileFilterUsed(false);
         
         if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-        {
-            //System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
-            //System.out.println("getSelectedFile(): " + chooser.getSelectedFile());
             filesInDirectory = chooser.getSelectedFile().listFiles();
-            //File[] listOfFiles = chooser.getSelectedFile().listFiles();
-            //System.out.println(listOfFiles[0]);
-        }
         else
             System.out.println("No Selection");
     }

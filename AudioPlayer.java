@@ -46,39 +46,6 @@ public class AudioPlayer {
         
         //default status is paused at start
         status = "paused";
-
-        //clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-    
-    //work as the user enters their choice
-    public void gotoChoice(int c) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
-    {
-        switch(c)
-        {
-            case 1:
-                pause();
-                break;
-            case 2:
-                resumeAudio();
-                break;
-            case 3:
-                restart();
-                break;
-            case 4:
-                stop();
-                break;
-            case 5:
-                System.out.println("Enter time in seconds (" + 0 + ", " + clip.getMicrosecondLength()/1000000 + ")");
-                long c1 = scan.nextLong();
-                jump(c1*1000000);
-                break;
-            case 6:
-                playStartSong();
-                break;
-            case 7:
-                playRandomSong();
-                break;
-        }
     }
     
     //method to play the audio
@@ -88,44 +55,6 @@ public class AudioPlayer {
         clip.start();
         
         status = "play";
-    }
-    
-    //method to pause the audio
-    public void pause()
-    {
-        if(status.equals("paused"))
-        {
-            System.out.println("Audio is already paused");
-            return;
-        }
-        this.currentFrame = this.clip.getMicrosecondPosition();
-        clip.stop();
-        status = "paused";
-    }
-    
-    //method to resume the audio
-    public void resumeAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException
-    {
-        if(status.equals(("play")))
-        {
-            System.out.println("Audio is already being played");
-            return;
-        }
-        clip.close();
-        resetAudioStream();
-        clip.setMicrosecondPosition(currentFrame);
-        this.play();
-    }
-    
-    //method to restart the audio
-    public void restart() throws UnsupportedAudioFileException, IOException, LineUnavailableException
-    {
-        clip.stop();
-        clip.close();
-        resetAudioStream();
-        currentFrame = 0L;
-        clip.setMicrosecondPosition(0);
-        this.play();
     }
     
     //method to stop the audio
@@ -159,10 +88,8 @@ public class AudioPlayer {
     }
     
     //method to play from the start of the song
-    public void playStartSong() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
+    public void playStartSong(long seconds) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     {
-        System.out.println("Enter how many seconds you would like to listen to: ");
-        long seconds = scan.nextLong();
         if(seconds > clip.getMicrosecondLength()/1000000) //check to make sure the max isn't gone over
             seconds = clip.getMicrosecondLength()/1000000;
         play();
@@ -170,7 +97,7 @@ public class AudioPlayer {
         boolean timeElapsed = false;
         while(!timeElapsed)
         {
-            if(System.currentTimeMillis() - initTime >= (seconds * 1000))
+            if(System.currentTimeMillis() - initTime >= (seconds * 1000)) //check every second if the time has been elapsed
                 timeElapsed = true;
             else
                 T.sleep(1000);
@@ -179,13 +106,11 @@ public class AudioPlayer {
     }
     
     //method to play from a random point in the song
-    public void playRandomSong() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
+    public long playRandomSong(long seconds, long startTime) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     {
-        System.out.println("Enter how many seconds you would like to listen to: ");
-        long seconds = scan.nextLong();
-        int randomSelection = rand.nextInt((int)(clip.getMicrosecondLength()/1000000)-(int)seconds);
-        long startTime = (long) randomSelection;
-        System.out.println("Starting Time: " + startTime);
+        if(startTime < 0)
+            startTime = rand.nextInt((int)(clip.getMicrosecondLength()/1000000)-(int)seconds);
+        //System.out.println("Starting Time: " + startTime);
         if(seconds > (clip.getMicrosecondLength() - startTime*1000000) /1000000) //check to make sure the max isn't gone over
             seconds = clip.getMicrosecondLength() - startTime*1000000;
         jump(startTime*1000000);
@@ -193,11 +118,13 @@ public class AudioPlayer {
         boolean timeElapsed = false;
         while(!timeElapsed)
         {
-            if(System.currentTimeMillis() - initTime >= (seconds * 1000))
+            if(System.currentTimeMillis() - initTime >= (seconds * 1000)) //check every second if the time has been elapsed
                 timeElapsed = true;
             else
                 T.sleep(1000);
         }
         stop();
+        
+        return startTime;
     }
 }

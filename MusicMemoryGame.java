@@ -10,6 +10,7 @@ import java.util.Random;
 public class MusicMemoryGame {
     
     static Random rand = new Random();
+    static Scanner scan = new Scanner(System.in);
     
     static File[] filesInDirectory;
 
@@ -25,13 +26,13 @@ public class MusicMemoryGame {
             { 
                 public void windowClosing(WindowEvent e) 
                 {
-                    panel.setVisible(false);
+                    frame.setVisible(false);
                     filesInDirectory = panel.getFilesInDirectory();
         
                     //for(int i = 0; i < 4; i++)
                         //System.out.println(filesInDirectory[i]);
                     
-                    mediaPlayer();
+                    mainMenu();
                     System.exit(0);
                 }
             }
@@ -43,7 +44,25 @@ public class MusicMemoryGame {
 
     }
     
-    public static void mediaPlayer()
+    public static void mainMenu()
+    {
+        while(true)
+        {
+            System.out.println("Welcome to The Music Memory Game");
+            System.out.println("-------------------------------------------------------------");
+            System.out.println("Please choose which mode you would like to play:");
+            System.out.println("1. Quiz on songs from the start"); 
+            System.out.println("2. Quiz on songs from a random point"); 
+            System.out.println("3. Exit"); 
+            int c = scan.nextInt();
+            if (c == 3) 
+                break;
+            if(c == 1 || c == 2)
+                secondaryMenu(c);
+        }
+    }
+    
+    public static void secondaryMenu(int choice)
     {
         try
         {
@@ -51,22 +70,117 @@ public class MusicMemoryGame {
             //String filePath = (String)filesInDirectory[randomSelection];
             AudioPlayer audioPlayer = new AudioPlayer(filesInDirectory[randomSelection]);
             
+            //System.out.println(filesInDirectory[randomSelection].getName().substring(0,filesInDirectory[randomSelection].getName().length()-4));
+            
             //audioPlayer.play();
             Scanner scan = new Scanner(System.in);
             
+            long time = 1;
+            int guesses = 3;
+            int points = 0;
+            long startTime = -1;
+            
             while(true)
             {
-                System.out.println("1. Pause"); 
-                System.out.println("2. Resume"); 
-                System.out.println("3. Restart"); 
-                System.out.println("4. Stop"); 
-                System.out.println("5. Jump to specific time"); 
-                System.out.println("6. Listen to a song from the start"); 
-                System.out.println("7. Listen to a song from a random time"); 
+                System.out.println("You are at " + points + " point(s)");
+                System.out.println("You are currently listening to " + time + " second(s) of the song.");
+                System.out.println("You have " + guesses + " left at this level.");
+                System.out.println("1. Listen");
+                System.out.println("2. Guess");
+                System.out.println("3. Skip level");
+                System.out.println("4. Skip song");
+                System.out.println("5. Exit"); 
                 int c = scan.nextInt(); 
-                audioPlayer.gotoChoice(c); 
-                if (c == 4) 
-                break;
+                if (c == 5) 
+                    break;
+                
+                switch(c)
+                {
+                    case 1:
+                        if(choice == 1)
+                            audioPlayer.playStartSong(time);
+                        else
+                            startTime = audioPlayer.playRandomSong(time, startTime);
+                        break;
+                    case 2:
+                        System.out.print("Enter your guess: ");
+                        String guess = scan.nextLine();
+                        guess = scan.nextLine();
+                        if(guess.equals(filesInDirectory[randomSelection].getName().substring(0,filesInDirectory[randomSelection].getName().length()-4)))
+                        {
+                            System.out.println("You are correct");
+                            if(time == 1)
+                            {
+                                points+=3;
+                                System.out.println("You got 3 points. Total points: " + points);                                
+                            }
+                            else if(time == 2)
+                            {
+                                points+=2;
+                                System.out.println("You got 2 points. Total points: " + points);                                
+                            }                            
+                            else
+                            {
+                                points+=1;
+                                System.out.println("You got 1 points. Total points: " + points);                                
+                            }
+                            time = 1;
+                            //go to next song
+                            randomSelection = rand.nextInt(filesInDirectory.length);
+                            audioPlayer = new AudioPlayer(filesInDirectory[randomSelection]);
+                        }
+                        else
+                        {
+                            guesses--;
+                            System.out.println("You were incorrect. Guesses remaining: " + guesses);
+                            if(time < 3 && guesses == 0)
+                            {
+                                System.out.println("Moving to next level.");
+                                time++;
+                                guesses = 3;
+                            }
+                            else if(time == 3 && guesses == 0)
+                            {
+                                System.out.println("You were unable to guess the song, the song was: " + filesInDirectory[randomSelection].getName().substring(0,filesInDirectory[randomSelection].getName().length()-4));
+                                time = 1;
+                                guesses = 3;
+                                startTime = -1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if(time < 3)
+                        {
+                            time++;
+                            guesses = 3;
+                            System.out.println("You skipped the level");
+                        }
+                        else
+                        {
+                            System.out.print("You skipped the song. ");
+                            System.out.println("The song was: " + filesInDirectory[randomSelection].getName().substring(0,filesInDirectory[randomSelection].getName().length()-4));
+                            System.out.println("Moving to next song...");
+                            time = 1;
+                            guesses = 3;
+                            startTime = -1;
+                            //go to next song
+                            randomSelection = rand.nextInt(filesInDirectory.length);
+                            audioPlayer = new AudioPlayer(filesInDirectory[randomSelection]);
+                        }   
+                        break;
+                    case 4:
+                        System.out.print("You skipped the song. ");
+                        System.out.println("The song was: " + filesInDirectory[randomSelection].getName().substring(0,filesInDirectory[randomSelection].getName().length()-4));
+                        System.out.println("Moving to next song...");
+                        time = 1;
+                        guesses = 3;
+                        startTime = -1;
+                        //go to next song
+                        randomSelection = rand.nextInt(filesInDirectory.length);
+                        audioPlayer = new AudioPlayer(filesInDirectory[randomSelection]);
+                        break;
+                }
+                //audioPlayer.gotoChoice(c); 
             }
             scan.close();
         }
