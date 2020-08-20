@@ -109,7 +109,7 @@ public class AudioPlayer {
     public long playRandomSong(long seconds, long startTime) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     {
         if(startTime < 0)
-            startTime = rand.nextInt((int)(clip.getMicrosecondLength()/1000000)-(int)seconds);
+            startTime = rand.nextInt((int)(clip.getMicrosecondLength()/1000000)-3); //3 seconds because thats the longest a sample can be
         //System.out.println("Starting Time: " + startTime);
         if(seconds > (clip.getMicrosecondLength() - startTime*1000000) /1000000) //check to make sure the max isn't gone over
             seconds = clip.getMicrosecondLength() - startTime*1000000;
