@@ -23,6 +23,8 @@ public class GUI extends JPanel implements ActionListener{
     
     private boolean validDirectory = false;
     
+    File[] filesInDirectory;
+    
     public GUI()
     {
         frame = new JFrame();
@@ -41,8 +43,8 @@ public class GUI extends JPanel implements ActionListener{
         JLabel title = new JLabel("Welcome to the Music Memory Game");
         
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(300, 300, 100, 300));
-        panel.setLayout(new GridLayout(0, 1, 0, 50));
+        panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 30, 100));
+        panel.setLayout(new GridLayout(0, 1, 0, 10));
         panel.add(title);
         panel.add(quizStart);
         panel.add(quizRand);
@@ -65,16 +67,24 @@ public class GUI extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        InvalidDirectoryGUI error;
         
         if(e.getSource() == quizStart)
         {
             if(validDirectory)
             {
                 System.out.println("Valid");
+                frame.dispose();
+                try
+                {
+                    new GameGUI(false, filesInDirectory);
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
             else
-                error = new InvalidDirectoryGUI();
+                new InvalidDirectoryGUI();
             
         }
         else if(e.getSource() == quizRand)
@@ -82,9 +92,18 @@ public class GUI extends JPanel implements ActionListener{
             if(validDirectory)
             {
                 System.out.println("Valid");
+                frame.dispose();
+                try
+                {
+                    new GameGUI(true, filesInDirectory);
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
             else
-                error = new InvalidDirectoryGUI();
+                new InvalidDirectoryGUI();
         }
         else if(e.getSource() == highScore)
         {
@@ -92,7 +111,6 @@ public class GUI extends JPanel implements ActionListener{
         }
         else if(e.getSource() == setDirectory)
         {
-            File[] filesInDirectory = null;
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new java.io.File("."));
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

@@ -48,6 +48,12 @@ public class AudioPlayer {
         status = "paused";
     }
     
+    public String getSongName()
+    {
+        System.out.println(file.getName());
+        return file.getName().substring(0,file.getName().length()-4);
+    }
+    
     //method to play the audio
     public void play()
     {
