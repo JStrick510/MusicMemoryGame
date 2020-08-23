@@ -38,6 +38,7 @@ public class GameGUI extends JPanel implements ActionListener {
     private long startTime = -1;
     private File[] filesInDirectory;
     private String currentSong;
+    private boolean save;
     
     public GameGUI(boolean random, File[] filesInDirectory) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     { 
@@ -94,7 +95,7 @@ public class GameGUI extends JPanel implements ActionListener {
         panelHolder[6][1].add(guessAnswer);
         
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 30, 100));
+        //panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 30, 100));
         panel.setLayout(new GridLayout(7, 3));
         
         for(int x = 0; x < i; x++)
@@ -132,7 +133,7 @@ public class GameGUI extends JPanel implements ActionListener {
             if(playTime < 3)
             {
                 playTime++;
-                time.setText("Listening to " + playTime + " second");
+                time.setText("Listening to " + playTime + " seconds");
                 guessesRemaining = 3;
                 guessesLeft.setText("Guesses Remaining: " + guessesRemaining);
                 informUser.setText("You skipped the level");
@@ -202,7 +203,7 @@ public class GameGUI extends JPanel implements ActionListener {
                 informUser.setText("You were incorrect.");
                 if(playTime < 3 && guessesRemaining == 0)
                 {
-                    System.out.println("Moving to next level.");
+                    informUser.setText("You were incorrect. Moving to next level...");
                     playTime++;
                     time.setText("Listening to " + playTime + " seconds");
                     guessesRemaining = 3;

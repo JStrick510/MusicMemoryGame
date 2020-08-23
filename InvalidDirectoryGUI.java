@@ -22,7 +22,7 @@ public class InvalidDirectoryGUI extends JPanel implements ActionListener{
         close.addActionListener(this);
         
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 3, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.setLayout(new GridLayout(0, 1));
         panel.add(title);
         panel.add(close);

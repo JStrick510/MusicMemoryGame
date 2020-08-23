@@ -43,7 +43,7 @@ public class GUI extends JPanel implements ActionListener{
         JLabel title = new JLabel("Welcome to the Music Memory Game");
         
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 30, 100));
+        panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         panel.setLayout(new GridLayout(0, 1, 0, 10));
         panel.add(title);
         panel.add(quizStart);
@@ -107,6 +107,10 @@ public class GUI extends JPanel implements ActionListener{
         }
         else if(e.getSource() == highScore)
         {
+            ScoreboardManager scoreboard = new ScoreboardManager();
+            scoreboard.createFile();
+            frame.dispose();
+            new ScoreboardGUI();
             
         }
         else if(e.getSource() == setDirectory)
