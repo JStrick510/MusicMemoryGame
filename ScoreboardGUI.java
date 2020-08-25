@@ -43,10 +43,16 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
     
     private boolean validDirectory = false;
     
-    File[] filesInDirectory;
+    private ScoreboardManager scoreboard;
+    private String[] types;
+    private String[] names;
+    private String[] scores;
+    private String[] dates;
     
-    public ScoreboardGUI()
+    public ScoreboardGUI(ScoreboardManager scoreboard)
     {
+        this.scoreboard = scoreboard;
+        
         frame = new JFrame();
         
         showAll = new JButton("Show All");
@@ -154,20 +160,106 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
         
         if(e.getSource() == showAll)
         {
- 
+            types = scoreboard.getTypes(0);
+            names = scoreboard.getNames(0);
+            scores = scoreboard.getScores(0);
+            dates = scoreboard.getDates(0);
+            setText();
         }
         else if(e.getSource() == showStart)
         {
-           
+            types = scoreboard.getTypes(1);
+            names = scoreboard.getNames(1);
+            scores = scoreboard.getScores(1);
+            dates = scoreboard.getDates(1);
+            setText();
         }
         else if(e.getSource() == showRand)
         {
-                        
+            types = scoreboard.getTypes(2);
+            names = scoreboard.getNames(2);
+            scores = scoreboard.getScores(2);
+            dates = scoreboard.getDates(2);
+            setText();
         }
         else if(e.getSource() == close)
         {
             frame.dispose();
             new GUI();
+        }
+    }
+    
+    public void setText()
+    {
+        if(!(types[0].equals("N")))
+        {
+            type1.setText(types[0]);
+            name1.setText(names[0]);
+            score1.setText(scores[0]);
+            date1.setText(dates[0]);
+        }
+        else
+        {
+            type1.setText("");
+            name1.setText("");
+            score1.setText("");
+            date1.setText("");
+        }
+        if(!(types[1].equals("N")))
+        {
+            type2.setText(types[1]);
+            name2.setText(names[1]);
+            score2.setText(scores[1]);
+            date2.setText(dates[1]);
+        }
+        else
+        {
+            type2.setText("");
+            name2.setText("");
+            score2.setText("");
+            date2.setText("");
+        }
+        if(!(types[2].equals("N")))
+        {
+            type3.setText(types[2]);
+            name3.setText(names[2]);
+            score3.setText(scores[2]);
+            date3.setText(dates[2]);
+        }
+        else
+        {
+            type3.setText("");
+            name3.setText("");
+            score3.setText("");
+            date3.setText("");
+        }
+        if(!(types[3].equals("N")))
+        {
+            type4.setText(types[3]);
+            name4.setText(names[3]);
+            score4.setText(scores[3]);
+            date4.setText(dates[3]);
+        }
+        else
+        {
+            type4.setText("");
+            name4.setText("");
+            score4.setText("");
+            date4.setText("");
+        }
+        if(!(types[4].equals("N")))
+        {
+            type5.setText(types[4]);
+            name5.setText(names[4]);
+            score5.setText(scores[4]);
+            date5.setText(dates[4]);
+        }
+        else
+        {
+            type5.setText("");
+            name5.setText("");
+            score5.setText("");
+            date5.setText("");
         }
     }
         

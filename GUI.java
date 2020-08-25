@@ -5,6 +5,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -107,10 +110,17 @@ public class GUI extends JPanel implements ActionListener{
         }
         else if(e.getSource() == highScore)
         {
-            ScoreboardManager scoreboard = new ScoreboardManager();
-            scoreboard.createFile();
+            ScoreboardManager scoreboard = null;
+            try 
+            { 
+                scoreboard = new ScoreboardManager();
+            } 
+            catch (IOException ex) 
+            {
+                ex.printStackTrace();
+            }
             frame.dispose();
-            new ScoreboardGUI();
+            new ScoreboardGUI(scoreboard);
             
         }
         else if(e.getSource() == setDirectory)
