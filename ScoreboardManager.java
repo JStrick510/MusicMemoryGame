@@ -23,11 +23,8 @@ public class ScoreboardManager {
         try
         {
             File file = new File("scoreboard.txt");
-            if(file.createNewFile())
-                System.out.println("file created");
-            else
+            if(!(file.createNewFile()))
             {
-                System.out.println("file already exists");
                 BufferedReader bufferedReader = new BufferedReader(new FileReader("scoreboard.txt"));
         
                 String line = bufferedReader.readLine();
@@ -91,9 +88,6 @@ public class ScoreboardManager {
                     }
                 }
             }
-            
-            for(int k = 0; k < 5; k++)
-                System.out.println(allSort.get(k));
         }
         
         else if(type.equals("S"))
@@ -118,9 +112,6 @@ public class ScoreboardManager {
                     }
                 }
             }
-            
-            for(int k = 0; k < 5; k++)
-                System.out.println(startSort.get(k));
         }
         
         else if(type.equals("R"))
@@ -145,9 +136,6 @@ public class ScoreboardManager {
                     }
                 }
             }
-            
-            for(int k = 0; k < 5; k++)
-                System.out.println(randSort.get(k));
         }
     }
     

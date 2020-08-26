@@ -4,27 +4,31 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GUI extends JPanel implements ActionListener{
+public class GUI extends JPanel implements ActionListener, ItemListener{
     
     private JButton quizStart;
     private JButton quizRand;
     private JButton highScore;
     private JButton setDirectory;
     private JButton exit;
+    private JCheckBox saveScore;
     private JFrame frame;
     
     private boolean validDirectory = false;
+    private boolean doSave = false;
     
     File[] filesInDirectory;
     
@@ -35,6 +39,8 @@ public class GUI extends JPanel implements ActionListener{
         quizStart = new JButton("Quiz on songs from the start");
         quizStart.addActionListener(this);
         quizRand = new JButton("Quiz on songs from a random point");
+        saveScore = new JCheckBox("Challenge mode (save score)");
+        saveScore.addItemListener(this);
         quizRand.addActionListener(this);
         highScore = new JButton("Check High Scores");
         highScore.addActionListener(this);
@@ -51,6 +57,7 @@ public class GUI extends JPanel implements ActionListener{
         panel.add(title);
         panel.add(quizStart);
         panel.add(quizRand);
+        panel.add(saveScore);
         panel.add(highScore);
         panel.add(setDirectory);
         panel.add(exit);
@@ -79,7 +86,7 @@ public class GUI extends JPanel implements ActionListener{
                 frame.dispose();
                 try
                 {
-                    new GameGUI(false, filesInDirectory);
+                    new GameGUI(false, filesInDirectory, doSave);
                 }
                 catch(Exception ex)
                 {
@@ -98,7 +105,7 @@ public class GUI extends JPanel implements ActionListener{
                 frame.dispose();
                 try
                 {
-                    new GameGUI(true, filesInDirectory);
+                    new GameGUI(true, filesInDirectory, doSave);
                 }
                 catch(Exception ex)
                 {
@@ -148,6 +155,18 @@ public class GUI extends JPanel implements ActionListener{
         {
             frame.dispose();
         }
+    }
+    
+    @Override
+    public void itemStateChanged(ItemEvent ae)
+    {
+        Object source = ae.getItemSelectable();
+        
+        if(source == saveScore)
+            doSave = true;
+        
+        if(ae.getStateChange() == ItemEvent.DESELECTED)
+            doSave = false;
     }
         
 }

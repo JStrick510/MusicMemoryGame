@@ -38,15 +38,16 @@ public class GameGUI extends JPanel implements ActionListener {
     private long startTime = -1;
     private File[] filesInDirectory;
     private String currentSong;
-    private boolean save;
+    private boolean doSave;
     
-    public GameGUI(boolean random, File[] filesInDirectory) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
+    public GameGUI(boolean random, File[] filesInDirectory, boolean doSave) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     { 
         this.filesInDirectory = filesInDirectory;
         game = new MusicMemoryGame();
         audioPlayer = game.selectSong(filesInDirectory);
         currentSong = audioPlayer.getSongName();
         this.random = random;
+        this.doSave = doSave;
         
         frame = new JFrame();
         
@@ -165,7 +166,10 @@ public class GameGUI extends JPanel implements ActionListener {
         else if(e.getSource() == close)
         {
             frame.dispose();
-            new GUI();
+            if(doSave)
+                new SaveScoreGUI(random, pointsScore);
+            else
+                new GUI();
         }
         else if(e.getSource() == guessAction)
         {
