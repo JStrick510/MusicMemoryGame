@@ -15,6 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * The GameGUI class is responsible for displaying the information while the
+ * user is playing the game.
+ * Responsibilities include: displaying info like guesses remaining and points,
+ * allowing the user to guess, listen to the clip, skip the level/song,
+ * allowing the user to go back to the main menu.
+ * @author Jacob Strickland
+ */
 public class GameGUI extends JPanel implements ActionListener {
 
     private JFrame frame;
@@ -30,7 +38,6 @@ public class GameGUI extends JPanel implements ActionListener {
     private JTextField guessAnswer;
     
     private boolean random;
-    MusicMemoryGame game;
     private AudioPlayer audioPlayer;
     private long playTime = 1;
     private int guessesRemaining = 3;
@@ -43,8 +50,8 @@ public class GameGUI extends JPanel implements ActionListener {
     public GameGUI(boolean random, File[] filesInDirectory, boolean doSave) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException
     { 
         this.filesInDirectory = filesInDirectory;
-        game = new MusicMemoryGame();
-        audioPlayer = game.selectSong(filesInDirectory);
+        audioPlayer = new AudioPlayer(filesInDirectory[0]);
+        audioPlayer = audioPlayer.selectSong(filesInDirectory);
         currentSong = audioPlayer.getSongName();
         this.random = random;
         this.doSave = doSave;
@@ -121,7 +128,10 @@ public class GameGUI extends JPanel implements ActionListener {
         {
             try
             {
-                startTime = game.listen(random, startTime, playTime, audioPlayer);
+                if(!random)
+                    startTime = audioPlayer.playStartSong(playTime);
+                else
+                    startTime = audioPlayer.playRandomSong(playTime, startTime);
             }
             catch(Exception ex)
             {
@@ -232,7 +242,7 @@ public class GameGUI extends JPanel implements ActionListener {
     {
         try
         {
-            audioPlayer = game.selectSong(filesInDirectory);
+            audioPlayer = audioPlayer.selectSong(filesInDirectory);
         }
         catch(Exception ex)
         {

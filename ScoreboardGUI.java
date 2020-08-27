@@ -4,14 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * The ScoreboardGUI class is responsible for displaying the high scores.
+ * Responsibilities include: displaying scoreboards based on the mode the
+ * respective scores were achieved in, allowing the user to go back to the 
+ * main menu
+ * @author Jacob Strickland
+ */
 public class ScoreboardGUI extends JPanel implements ActionListener{
     
     private JButton showAll;

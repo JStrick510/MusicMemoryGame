@@ -7,6 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The ScoreboardManager class is responsible for giving the proper information
+ * to ScoreboardGUI to display.
+ * Responsibilities include: creating a new scoreboard text file if one doesn't
+ * exist, gathering the data from an existing scoreboard text file, sorting the
+ * scores by type, and returning the display scoreboard information
+ * @author Jacob Strickland
+ */
 public class ScoreboardManager {
     
     private ArrayList<String> listOfLines = new ArrayList<>();
@@ -37,18 +45,13 @@ public class ScoreboardManager {
                 bufferedReader.close();
                 
                 sortScores("");
-                System.out.println();
                 sortScores("S");
-                System.out.println();
                 sortScores("R");
                 
                 getTypes(0);
                 getNames(0);
                 getScores(0);
                 getDates(0);
-
-                //for(String lines : listOfLines)
-                    //System.out.println(lines);
             }
             
         }

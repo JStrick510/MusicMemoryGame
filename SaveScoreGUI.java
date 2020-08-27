@@ -17,6 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * The SaveScoreGUI class is responsible for getting the name of the user and then
+ * saving their score.
+ * Responsibilities include: getting the user's name, creating a scoreboard text
+ * file if one doesn't exist, saving the score to the existing scoreboard text file
+ * @author Jacob Strickland
+ */
 public class SaveScoreGUI extends JPanel implements ActionListener{
     
     private JFrame frame;

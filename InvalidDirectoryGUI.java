@@ -10,6 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * The InvalidDirectoryGUI class is responsible for letting the user know there 
+ * is not a valid directory included.
+ * Responsibilities include: allowing the user to go back to the main menu
+ * @author Jacob Strickland
+ */
 public class InvalidDirectoryGUI extends JPanel implements ActionListener{
     
     private JFrame frame;

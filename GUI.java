@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.BorderFactory;
@@ -17,6 +16,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * The GUI class is responsible for displaying the main menu GUI that branches 
+ * to the others.
+ * Responsibilities include: selecting a file directory, allowing user to go 
+ * to different GUIs
+ * @author Jacob Strickland
+ */
 public class GUI extends JPanel implements ActionListener, ItemListener{
     
     private JButton quizStart;
