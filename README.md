@@ -3,7 +3,7 @@
 
 ***EXAMPLE***
 
-[![Main Menu GUI](https://imgur.com/MCrh5PN)]()
+[![Main Menu GUI](https://i.imgur.com/MCrh5PN.png)]()
 
 ## Features
 
