@@ -54,6 +54,10 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
     private String[] scores;
     private String[] dates;
     
+    /**
+     * The constructor for the ScoreboardGUI class.
+     * @param scoreboard ScoreboardManager, the class that gives this GUI information
+     */
     public ScoreboardGUI(ScoreboardManager scoreboard)
     {
         this.scoreboard = scoreboard;
@@ -161,6 +165,10 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
     }
 
     @Override
+    /**
+     * The method that makes things happen when the buttons are pressed.
+     * @param e, ActionEvent a button that was pressed
+     */
     public void actionPerformed(ActionEvent e) {
         
         if(e.getSource() == showAll)

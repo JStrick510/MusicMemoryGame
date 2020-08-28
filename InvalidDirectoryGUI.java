@@ -20,19 +20,26 @@ public class InvalidDirectoryGUI extends JPanel implements ActionListener{
     
     private JFrame frame;
     
+    /**
+     * The constructor for the InvalidDirectoryGUI class.
+     */
     public InvalidDirectoryGUI()
     {
         frame = new JFrame();
+        
+        //initizaling the GUI elements with text and action listeners
         JLabel title = new JLabel("Please select a valid file directory");
         JButton close = new JButton("Close");
         close.addActionListener(this);
         
+        //setting the panel parameters and adding the elements
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.setLayout(new GridLayout(0, 1));
         panel.add(title);
         panel.add(close);
         
+        //setting the frame information
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Error");
@@ -42,8 +49,13 @@ public class InvalidDirectoryGUI extends JPanel implements ActionListener{
          
     }
     
+    @Override
+    /**
+     * The method that makes things happen when the buttons are pressed.
+     * @param e ActionEvent, a button that was pressed
+     */
     public void actionPerformed(ActionEvent e) {
-        frame.dispose();    
+        frame.dispose();    //get rid of the current GUI
     }   
     
 }

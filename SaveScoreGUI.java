@@ -32,21 +32,31 @@ public class SaveScoreGUI extends JPanel implements ActionListener{
     private String name;
     private int score;
     
+    /**
+     * The constructor for the SaveScoreGUI.
+     * @param random boolean, if the game that was finished started the audio clips randomly
+     * @param score int, the score the user achieved in the finished game
+     */
     public SaveScoreGUI(boolean random, int score)
     {
+        //set the type of the game properly
         if(random)
             type = "R";
         else
             type = "S";
         
+        //set the score
         this.score = score;
         
         frame = new JFrame();
+        
+        //initizaling the GUI elements with text and action listeners
         JLabel title = new JLabel("Please enter your name");
         nameAnswer = new JTextField();
         JButton close = new JButton("Submit");
         close.addActionListener(this);
         
+        //setting the panel parameters and adding the elements
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.setLayout(new GridLayout(0, 1));
@@ -54,6 +64,7 @@ public class SaveScoreGUI extends JPanel implements ActionListener{
         panel.add(nameAnswer);
         panel.add(close);
         
+        //setting the frame information
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Name Select");
@@ -63,31 +74,31 @@ public class SaveScoreGUI extends JPanel implements ActionListener{
          
     }
     
+    @Override
+    /**
+     * The method that makes things happen when the buttons are pressed.
+     * @param e ActionEvent, a button that was pressed
+     */
     public void actionPerformed(ActionEvent e) {
-        name = nameAnswer.getText();
-        addToScoreboard();
-        frame.dispose();
-        new GUI();
+        name = nameAnswer.getText();    //get the text in the text field
+        addToScoreboard();              //add the name and information to the scoreboard text file
+        frame.dispose();                //get rid of the current GUI
+        new GUI();                      //create a new main menu GUI to go back to
     }
     
+    /**
+     * The method that adds the current information to the scoreboard text file.
+     */
     public void addToScoreboard()
     {
-        String scoreLine = type + "," + name + "," + score + "," + java.time.LocalDate.now() + "\n";
-        System.out.println(scoreLine);
+        String scoreLine = type + "," + name + "," + score + "," + java.time.LocalDate.now() + "\n"; //create the string to be added
         
         try
         {
             File file = new File("scoreboard.txt");
-            if(file.createNewFile())
-            {
-                Path filePath = Paths.get("scoreboard.txt");
-                Files.write(filePath, scoreLine.getBytes(), StandardOpenOption.APPEND);
-            }
-            else
-            {
-                Path filePath = Paths.get("scoreboard.txt");
-                Files.write(filePath, scoreLine.getBytes(), StandardOpenOption.APPEND);
-            }
+            file.createNewFile();                                                   //create a new file if one doesn't already exist
+            Path filePath = Paths.get("scoreboard.txt");
+            Files.write(filePath, scoreLine.getBytes(), StandardOpenOption.APPEND); //append the created string to the file
             
         }
         catch(IOException e)

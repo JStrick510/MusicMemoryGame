@@ -39,7 +39,7 @@ public class AudioPlayer {
     private final long usConv = 1000000;
     
     /**
-     * The constructor for the AudioPlayer class
+     * The constructor for the AudioPlayer class.
      * @param file File, the audio file that is being used
      * @throws UnsupportedAudioFileException
      * @throws IOException
@@ -56,7 +56,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that gets the title of the audio file
+     * Method that gets the title of the audio file.
      * @return String, the name of the audio file
      */ 
     public String getSongName()
@@ -65,7 +65,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that plays the audio file
+     * Method that plays the audio file.
      */ 
     public void play()
     {
@@ -73,7 +73,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that stops the audio file
+     * Method that stops the audio file.
      * @throws UnsupportedAudioFileException
      * @throws IOException
      * @throws LineUnavailableException
@@ -86,7 +86,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that jumps to a specific part of the audio file
+     * Method that jumps to a specific part of the audio file.
      * @param jumpFrame long, the frame of the song to jump to
      * @throws UnsupportedAudioFileException
      * @throws IOException
@@ -106,7 +106,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that resets the audio stream
+     * Method that resets the audio stream.
      * @throws UnsupportedAudioFileException
      * @throws IOException
      * @throws LineUnavailableException
@@ -118,7 +118,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that jumps to a specific part of the audio file
+     * Method that jumps to a specific part of the audio file.
      * @param seconds long, the amount of seconds the clip will be played for
      * @return startTime, long the startTime of the clip (default -1 since from the start)
      * @throws UnsupportedAudioFileException
@@ -143,12 +143,13 @@ public class AudioPlayer {
                 Thread.sleep(jumpInterval);                                         //do not check until the interval has elapsed again
         }
         stop();                                                                     //stop playing the audio file after the time has elapsed
+        resetAudioStream();
         
         return -1;                                                                  //return the default -1 startTime
     }
     
     /**
-     * Method that jumps to a specific part of the audio file
+     * Method that jumps to a specific part of the audio file.
      * @param seconds long, the amount of seconds the clip will be played for
      * @param startTime long, the frame to start the playing of the clip at
      * @return startTime long, the frame to start the playing of the clip at
@@ -182,7 +183,7 @@ public class AudioPlayer {
     }
     
     /**
-     * Method that jumps to a specific part of the audio file
+     * Method that jumps to a specific part of the audio file.
      * @param filesInDirectory File[], the array of files that were in the selected directory
      * @return AudioPlayer, a new audioPlayer with a different random song
      * @throws UnsupportedAudioFileException

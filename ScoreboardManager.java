@@ -26,15 +26,21 @@ public class ScoreboardManager {
     private String[] scores = new String[5];
     private String[] dates = new String[5];
     
+    /**
+     * The constructor for the ScorebaordManager.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public ScoreboardManager() throws FileNotFoundException, IOException
     {
         try
         {
             File file = new File("scoreboard.txt");
-            if(!(file.createNewFile()))
+            if(!(file.createNewFile())) //if there exists a file, get the information from it
             {
                 BufferedReader bufferedReader = new BufferedReader(new FileReader("scoreboard.txt"));
         
+                //add all the lines in the file to the arraylist
                 String line = bufferedReader.readLine();
                 while(line != null)
                 {
