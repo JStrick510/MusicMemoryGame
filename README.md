@@ -9,9 +9,9 @@
 
 > Something here
 
-'''shell
+```shell
 quote
-'''
+```
 
 ## Future Items to work on
 - list
