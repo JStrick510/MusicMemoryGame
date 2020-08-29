@@ -23,12 +23,13 @@
 
 ## Future Items to work on
 - Only allow .wav files
-  - Have the directory only chose .wav files rather than all files
+  - Have the directory only choose .wav files rather than all files
   - Only show directories containing .wav files
-- Add menu to show audio file list while playing
-  - Have titles as buttons to use to guess rather than typing
+- Add menu to show audio files in directory while playing
+  - Have file titles as buttons to use to guess rather than typing
 - Make the challenge mode more difficult
   - Time limit
   - One guess
+  - No audio file list
 - Make the GUIs look nice
 - Allow high scores to be sorted by date if a tie
