@@ -1,8 +1,6 @@
 # MusicMemoryGame
 > A memory based game for music where users give the program audio files and the program will quiz the user on what song is being played and awarding points.
 
-***EXAMPLE***
-
 
 ## Features
 
@@ -16,11 +14,11 @@
 
 > Game Screen
 
-[![Game Screen](https://i.imgur.com/68ynMHY.png]()
+[![Game Screen](https://i.imgur.com/68ynMHY.png)]()
 
 > High Score
 
-[![High Score](https://i.imgur.com/R4G1Fky.png]()
+[![High Score](https://i.imgur.com/R4G1Fky.png)]()
 
 
 ## Future Items to work on
