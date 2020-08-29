@@ -3,16 +3,34 @@
 
 ***EXAMPLE***
 
-[![Main Menu GUI](https://i.imgur.com/MCrh5PN.png)]()
 
 ## Features
 
-> Something here
+> Main Menu
 
-```shell
-quote
-```
+[![Main Menu GUI](https://i.imgur.com/MCrh5PN.png)]()
+
+> File Selection
+
+[![File Selection](https://i.imgur.com/rnkDnLs.png)]()
+
+> Game Screen
+
+[![Game Screen](https://i.imgur.com/68ynMHY.png]()
+
+> High Score
+
+[![High Score](https://i.imgur.com/R4G1Fky.png]()
+
 
 ## Future Items to work on
-- list
-  - sub point
+- Only allow .wav files
+  - Have the directory only chose .wav files rather than all files
+  - Only show directories containing .wav files
+- Add menu to show audio file list while playing
+  - Have titles as buttons to use to guess rather than typing
+- Make the challenge mode more difficult
+  - Time limit
+  - One guess
+- Make the GUIs look nice
+- Allow high scores to be sorted by date if a tie
