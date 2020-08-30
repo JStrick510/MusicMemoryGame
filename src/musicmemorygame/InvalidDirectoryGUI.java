@@ -25,9 +25,8 @@ public class InvalidDirectoryGUI extends JPanel implements ActionListener{
      */
     public InvalidDirectoryGUI()
     {
-        frame = new JFrame();
-        
         //initizaling the GUI elements with text and action listeners
+        frame = new JFrame();
         JLabel title = new JLabel("Please select a valid file directory");
         JButton close = new JButton("Close");
         close.addActionListener(this);

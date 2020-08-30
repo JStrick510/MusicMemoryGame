@@ -36,7 +36,7 @@ public class ScoreboardManager {
         try
         {
             File file = new File("scoreboard.txt");
-            if(!(file.createNewFile())) //if there exists a file, get the information from it
+            if(!(file.createNewFile()))     //if there exists a file, get the information from it
             {
                 BufferedReader bufferedReader = new BufferedReader(new FileReader("scoreboard.txt"));
         
@@ -49,15 +49,6 @@ public class ScoreboardManager {
                 }
 
                 bufferedReader.close();
-                
-                sortScores("");
-                sortScores("S");
-                sortScores("R");
-                
-                getTypes(0);
-                getNames(0);
-                getScores(0);
-                getDates(0);
             }
             
         }
@@ -69,6 +60,10 @@ public class ScoreboardManager {
         
     }
     
+    /**
+     * The method that sorts the scores by type of game played.
+     * @param type String, which leaderboard to sort for
+     */
     public void sortScores(String type)
     {
         for(int i = 0; i < 5; i++) //initialize as blank
@@ -80,19 +75,19 @@ public class ScoreboardManager {
         
         if(type.equals(""))
         {
-            for(String line : listOfLines)
+            for(String line : listOfLines)                              //for all the lines in the scoreboard text file
             {
-                String[] temp = line.split("\\s*,\\s*");
-                int score = Integer.parseInt(temp[2]);
-                for(int j = 0; j < 5; j++)
+                String[] temp = line.split("\\s*,\\s*");                //split based on commas
+                int score = Integer.parseInt(temp[2]);                  //set the score to the third value
+                for(int j = 0; j < 5; j++)                              //iterate through the current top five
                 {
-                    String[] check = allSort.get(j).split("\\s*,\\s*");
-                    int checkScore = Integer.parseInt(check[2]);
-                    if(score >= checkScore)
+                    String[] check = allSort.get(j).split("\\s*,\\s*"); //split the current top five score based on commas
+                    int checkScore = Integer.parseInt(check[2]);        //set the comparison score to the third value
+                    if(score >= checkScore)                             //if score is greater than the current top 5 score
                     {
-                        allSort.add(j, line);
-                        if(allSort.size() > 5)
-                            allSort.remove(5);
+                        allSort.add(j, line);                           //add the line to the score arraylist at position
+                        if(allSort.size() > 5)                          //if the arraylist is now greater than five (it always will be when a score is added)
+                            allSort.remove(5);                          //pop the last element since the scoreboard only displays the top five
                         break;
                     }
                 }
@@ -101,21 +96,21 @@ public class ScoreboardManager {
         
         else if(type.equals("S"))
         {
-            for(String line : listOfLines)
+            for(String line : listOfLines)                                      //for all the lines in the scoreboard text file
             {
-                String[] temp = line.split("\\s*,\\s*");
-                if(temp[0].equals("S"))
+                String[] temp = line.split("\\s*,\\s*");                        //split based on commas
+                if(temp[0].equals("S"))                                         //check to see if the type matches the type that is being sorted
                 {
-                    int score = Integer.parseInt(temp[2]);
-                    for(int j = 0; j < 5; j++)
+                    int score = Integer.parseInt(temp[2]);                      //set the score to the third value
+                    for(int j = 0; j < 5; j++)                                  //iterate through the current top five
                     {
-                        String[] check = startSort.get(j).split("\\s*,\\s*");
-                        int checkScore = Integer.parseInt(check[2]);
-                        if(score >= checkScore)
+                        String[] check = startSort.get(j).split("\\s*,\\s*");   //split the current top five score based on commas
+                        int checkScore = Integer.parseInt(check[2]);            //set the comparison score to the third value
+                        if(score >= checkScore)                                 //if score is greater than the current top 5 score
                         {
-                            startSort.add(j, line);
-                            if(startSort.size() > 5)
-                                startSort.remove(5);
+                            startSort.add(j, line);                             //add the line to the score arraylist at position
+                            if(startSort.size() > 5)                            //if the arraylist is now greater than five (it always will be when a score is added)
+                                startSort.remove(5);                            //pop the last element since the scoreboard only displays the top five
                             break;
                         }
                     }
@@ -125,21 +120,21 @@ public class ScoreboardManager {
         
         else if(type.equals("R"))
         {
-            for(String line : listOfLines)
+            for(String line : listOfLines)                                      //for all the lines in the scoreboard text file
             {
-                String[] temp = line.split("\\s*,\\s*");
-                if(temp[0].equals("R"))
+                String[] temp = line.split("\\s*,\\s*");                        //split based on commas
+                if(temp[0].equals("R"))                                         //check to see if the type matches the type that is being sorted
                 {
-                    int score = Integer.parseInt(temp[2]);
-                    for(int j = 0; j < 5; j++)
+                    int score = Integer.parseInt(temp[2]);                      //set the score to the third value
+                    for(int j = 0; j < 5; j++)                                  //iterate through the current top five
                     {
-                        String[] check = randSort.get(j).split("\\s*,\\s*");
-                        int checkScore = Integer.parseInt(check[2]);
-                        if(score >= checkScore)
+                        String[] check = randSort.get(j).split("\\s*,\\s*");    //split the current top five score based on commas
+                        int checkScore = Integer.parseInt(check[2]);            //set the comparison score to the third value
+                        if(score >= checkScore)                                 //if score is greater than the current top 5 score
                         {
-                            randSort.add(j, line);
-                            if(randSort.size() > 5)
-                                randSort.remove(5);
+                            randSort.add(j, line);                              //add the line to the score arraylist at position
+                            if(randSort.size() > 5)                             //if the arraylist is now greater than five (it always will be when a score is added)
+                                randSort.remove(5);                             //pop the last element since the scoreboard only displays the top five
                             break;
                         }
                     }
@@ -148,6 +143,11 @@ public class ScoreboardManager {
         }
     }
     
+    /**
+     * The method that gets the types in leaderboard order.
+     * @param x int, which leaderboard to get info for
+     * @return String[], the array of types in order
+     */
     public String[] getTypes(int x)
     {
         if(x == 0)
@@ -180,6 +180,11 @@ public class ScoreboardManager {
         return types;
     }
     
+    /**
+     * The method that gets the names in leaderboard order.
+     * @param x int, which leaderboard to get info for
+     * @return String[], the array of name in order
+     */
     public String[] getNames(int x)
     {
         if(x == 0)
@@ -212,6 +217,11 @@ public class ScoreboardManager {
         return names;
     }
     
+    /**
+     * The method that gets the scores in leaderboard order.
+     * @param x int, which leaderboard to get info for
+     * @return String[], the array of scores in order
+     */
     public String[] getScores(int x)
     {
         if(x == 0)
@@ -243,7 +253,12 @@ public class ScoreboardManager {
         
         return scores;
     }
-        
+    
+    /**
+     * The method that gets the dates in leaderboard order.
+     * @param x int, which leaderboard to get info for
+     * @return String[], the array of dates in order
+     */
     public String[] getDates(int x)
     {
         if(x == 0)

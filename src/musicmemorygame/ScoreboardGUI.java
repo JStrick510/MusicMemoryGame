@@ -19,40 +19,43 @@ import javax.swing.JPanel;
  */
 public class ScoreboardGUI extends JPanel implements ActionListener{
     
-    private JButton showAll;
-    private JButton showStart;
-    private JButton showRand;
-    private JButton close;
+    private JButton showAll;    //button to show the overall leaderboard
+    private JButton showStart;  //button to show the start leaderboard
+    private JButton showRand;   //button to show the random leaderboard
+    private JButton close;      //button to close the GUI
     private JFrame frame;
     
+    //information for the #1 player
     private JLabel type1;
     private JLabel name1;
     private JLabel score1;
     private JLabel date1;
+    //information for the #2 player
     private JLabel type2;
     private JLabel name2;
     private JLabel score2;
     private JLabel date2;
+    //information for the #3 player
     private JLabel type3;
     private JLabel name3;
     private JLabel score3;
     private JLabel date3;
+    //information for the #4 player
     private JLabel type4;
     private JLabel name4;
     private JLabel score4;
     private JLabel date4;
+    //information for the #5 player
     private JLabel type5;
     private JLabel name5;
     private JLabel score5;
     private JLabel date5;
     
-    private boolean validDirectory = false;
-    
-    private ScoreboardManager scoreboard;
-    private String[] types;
-    private String[] names;
-    private String[] scores;
-    private String[] dates;
+    private ScoreboardManager scoreboard;   //to get the information to display
+    private String[] types;                 //array containing all of the top five types for the respective leaderboard
+    private String[] names;                 //array containing all of the top five names for the respective leaderboard
+    private String[] scores;                //array containing all of the top five scores for the respective leaderboard
+    private String[] dates;                 //array containing all of the top five dates for the respective leaderboard
     
     /**
      * The constructor for the ScoreboardGUI class.
@@ -62,8 +65,8 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
     {
         this.scoreboard = scoreboard;
         
+        //initizaling the GUI elements with text and action listeners
         frame = new JFrame();
-        
         showAll = new JButton("Show All");
         showAll.addActionListener(this);
         showStart = new JButton("Start Only");
@@ -72,14 +75,12 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
         showRand.addActionListener(this);
         close = new JButton("Close");
         close.addActionListener(this);
-        
         JLabel title1 = new JLabel("HIGH");
         JLabel title2 = new JLabel("SCORES");
         JLabel type = new JLabel("Type");
         JLabel name = new JLabel("Name");
         JLabel score = new JLabel("Score");
         JLabel date = new JLabel("Date");
-        
         type1 = new JLabel("");
         name1 = new JLabel("");
         score1 = new JLabel("");
@@ -101,12 +102,13 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
         score5 = new JLabel("");
         date5 = new JLabel("");
         
+        //setting the panel parameters and adding the elements
         int i = 8;
         int j = 4;
         JPanel[][] panelHolder = new JPanel[i][j];
         setLayout(new GridLayout(i,j));
         
-        for(int m = 0; m < i; m ++)
+        for(int m = 0; m < i; m ++) //initialize a 2D array of blank panels
         {
             for(int n = 0; n < j; n++)
             {
@@ -115,6 +117,7 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
             }
         }
         
+        //add elements that aren't blank at specific coordinates
         panelHolder[0][1].add(title1);
         panelHolder[0][2].add(title2);
         panelHolder[1][0].add(type);
@@ -150,12 +153,13 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
         panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         panel.setLayout(new GridLayout(8, 4));
         
-        for(int x = 0; x < i; x++)
+        for(int x = 0; x < i; x++)  //add the panels stored in the 2D array to the panel in order
         {
             for(int y = 0; y < j; y++)
                 panel.add(panelHolder[x][y]);
         }
 
+        //setting the frame information
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Music Memory Game");
@@ -171,89 +175,95 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
      */
     public void actionPerformed(ActionEvent e) {
         
-        if(e.getSource() == showAll)
+        if(e.getSource() == showAll)            //if button is pressed to show overall leaderboard
         {
-            types = scoreboard.getTypes(0);
-            names = scoreboard.getNames(0);
-            scores = scoreboard.getScores(0);
-            dates = scoreboard.getDates(0);
-            setText();
+            scoreboard.sortScores("");          //sort all scores
+            types = scoreboard.getTypes(0);     //get the types to display from the ScoreboardManager
+            names = scoreboard.getNames(0);     //get the names to display from the ScoreboardManager
+            scores = scoreboard.getScores(0);   //get the scores to display from the ScoreboardManager
+            dates = scoreboard.getDates(0);     //get the dates to display from the ScoreboardManager
+            setText();                          //update the GUI
         }
-        else if(e.getSource() == showStart)
+        else if(e.getSource() == showStart)     //if button is pressed to show the starting leaderboard
         {
-            types = scoreboard.getTypes(1);
-            names = scoreboard.getNames(1);
-            scores = scoreboard.getScores(1);
-            dates = scoreboard.getDates(1);
-            setText();
+            scoreboard.sortScores("S");         //sort the scores only that played from the start
+            types = scoreboard.getTypes(1);     //get the types to display from the ScoreboardManager
+            names = scoreboard.getNames(1);     //get the names to display from the ScoreboardManager
+            scores = scoreboard.getScores(1);   //get the scores to display from the ScoreboardManager
+            dates = scoreboard.getDates(1);     //get the dates to display from the ScoreboardManager
+            setText();                          //update the GUI
         }
-        else if(e.getSource() == showRand)
+        else if(e.getSource() == showRand)      //if button is pressed to show the random leaderboard
         {
-            types = scoreboard.getTypes(2);
-            names = scoreboard.getNames(2);
-            scores = scoreboard.getScores(2);
-            dates = scoreboard.getDates(2);
-            setText();
+            scoreboard.sortScores("R");         //sort the scores that played from a random start time
+            types = scoreboard.getTypes(2);     //get the types to display from the ScoreboardManager
+            names = scoreboard.getNames(2);     //get the names to display from the ScoreboardManager
+            scores = scoreboard.getScores(2);   //get the scores to display from the ScoreboardManager
+            dates = scoreboard.getDates(2);     //get the dates to display from the ScoreboardManager
+            setText();                          //update the GUI
         }
-        else if(e.getSource() == close)
+        else if(e.getSource() == close)         //if button is pressed to close the GUI
         {
-            frame.dispose();
-            new GUI();
+            frame.dispose();                    //get rid of the GUI
+            new GUI();                          //go back to the main menu GUI
         }
     }
     
+    /**
+     * The method that updates the ScoreboardGUI with the proper information.
+     */
     public void setText()
     {
-        if(!(types[0].equals("N")))
+        if(!(types[0].equals("N")))     //if the type is not null, display the information
         {
             type1.setText(types[0]);
             name1.setText(names[0]);
             score1.setText(scores[0]);
             date1.setText(dates[0]);
         }
-        else
+        else                            //otherwise display nothing
         {
             type1.setText("");
             name1.setText("");
             score1.setText("");
             date1.setText("");
         }
-        if(!(types[1].equals("N")))
+        if(!(types[1].equals("N")))     //if the type is not null, display the information
         {
             type2.setText(types[1]);
             name2.setText(names[1]);
             score2.setText(scores[1]);
             date2.setText(dates[1]);
         }
-        else
+        else                            //otherwise display nothing
         {
             type2.setText("");
             name2.setText("");
             score2.setText("");
             date2.setText("");
         }
-        if(!(types[2].equals("N")))
+        if(!(types[2].equals("N")))     //if the type is not null, display the information
         {
             type3.setText(types[2]);
             name3.setText(names[2]);
             score3.setText(scores[2]);
             date3.setText(dates[2]);
         }
-        else
+        else                            //otherwise display nothing
         {
             type3.setText("");
             name3.setText("");
             score3.setText("");
             date3.setText("");
         }
-        if(!(types[3].equals("N")))
+        if(!(types[3].equals("N")))     //if the type is not null, display the information
         {
             type4.setText(types[3]);
             name4.setText(names[3]);
             score4.setText(scores[3]);
             date4.setText(dates[3]);
         }
-        else
+        else                            //otherwise display nothing
         {
             type4.setText("");
             name4.setText("");
@@ -267,7 +277,7 @@ public class ScoreboardGUI extends JPanel implements ActionListener{
             score5.setText(scores[4]);
             date5.setText(dates[4]);
         }
-        else
+        else                            //otherwise display nothing
         {
             type5.setText("");
             name5.setText("");

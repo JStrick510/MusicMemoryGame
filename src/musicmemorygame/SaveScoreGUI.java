@@ -47,10 +47,9 @@ public class SaveScoreGUI extends JPanel implements ActionListener{
         
         //set the score
         this.score = score;
-        
-        frame = new JFrame();
-        
+               
         //initizaling the GUI elements with text and action listeners
+        frame = new JFrame();
         JLabel title = new JLabel("Please enter your name");
         nameAnswer = new JTextField();
         JButton close = new JButton("Submit");

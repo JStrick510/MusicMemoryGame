@@ -43,9 +43,8 @@ public class GUI extends JPanel implements ActionListener, ItemListener{
      */
     public GUI()
     {
-        frame = new JFrame();
-        
         //initizaling the GUI elements with text and action listeners
+        frame = new JFrame();
         quizStart = new JButton("Quiz on songs from the start");
         quizStart.addActionListener(this);
         quizRand = new JButton("Quiz on songs from a random point");
