@@ -33,3 +33,5 @@
   - No audio file list
 - Make the GUIs look nice
 - Allow high scores to be sorted by date if a tie
+- Improve the program's robustness
+  - Make values easier to change and modify
